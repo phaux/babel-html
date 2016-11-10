@@ -1,0 +1,38 @@
+{
+  "name": "babel-html",
+  "version": "0.0.0",
+  "description": "Compile JS embedded in HTML with babel",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phaux/babel-html.git"
+  },
+  "keywords": [
+    "babel",
+    "html",
+    "transpile",
+    "compile",
+    "esnext"
+  ],
+  "author": "phaux <phaux4@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phaux/babel-html/issues"
+  },
+  "homepage": "https://github.com/phaux/babel-html#readme",
+  "devDependencies": {
+    "eslint": "^3.9.1"
+  },
+  "dependencies": {
+    "babel-core": "^6.18.2",
+    "cheerio": "^0.22.0",
+    "co": "^4.6.0",
+    "glob": "^7.1.1",
+    "mkdirp": "^0.5.1",
+    "pify": "^2.3.0"
+  }
+}
