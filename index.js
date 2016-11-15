@@ -23,14 +23,13 @@ const printError = err => console.error(err.message)
 
 const transformHtml = co.wrap(function *(src, dest) {
   console.log(`${src} -> ${dest}`)
-  const opts = new babel.OptionManager().init({filename: src})
   const dom = yield p(fs.readFile)(src, 'utf8').then(cheerio.load)
   dom('script:not([src])').each((i, el) => {
     const input = dom(el).text()
     const [firstLine] = input.match(/^.*\S.*$/m) || [';']
     const [indent] = firstLine.match(/^\s*/)
     const end = input.match(/\s*$/)[0]
-    const output = babel.transform(input, opts).code
+    const output = babel.transform(input, {filename: src}).code
     dom(el).text('\n' + output.replace(/^\n/, '').replace(/^/gm, indent) + end)
   })
   yield p(mkdirp)(path.dirname(dest)).catch(printError)
