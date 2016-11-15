@@ -1,6 +1,15 @@
 # `babel-html`
 
-Usage: `babel-html src-dir dest-dir`
+```
+Usage:  -s <src-dir> -d <dest-dir>
+
+Options:
+  -h, --help       Show help                                           [boolean]
+  -s, --src-dir    Source dir                                [string] [required]
+  -d, --dest-dir   Destination dir                           [string] [required]
+  -w, --watch      Watch for changes                                   [boolean]
+  -D, --copy-files Copy non-compilable files                           [boolean]
+```
 
 This will compile all scripts embedded in all .html files in `src-dir` and save the results to `dest-dir`
 
@@ -9,6 +18,5 @@ This will compile all scripts embedded in all .html files in `src-dir` and save 
 ## TODOs
 
 - writing doesn't work at all yet
-- the only way to specify config is via `.babelrc` - add command line options
-- paths must be directories, not single files - make cmd line more flexible
+- allow specifying config via command line
 - write tests
