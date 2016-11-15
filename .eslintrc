@@ -29,7 +29,6 @@ rules:
   new-cap: error
   no-caller: error
   no-console: off
-  no-else-return: error
   no-extra-parens: error
   no-invalid-this: error
   no-labels: error
