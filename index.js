@@ -21,7 +21,7 @@ const o = require('yargs')
 
 const printError = err => console.error(err.message)
 
-const transform = co.wrap(function *(src, dest) {
+const transformHtml = co.wrap(function *(src, dest) {
   console.log(`${src} -> ${dest}`)
   const opts = new babel.OptionManager().init({filename: src})
   const dom = yield p(fs.readFile)(src, 'utf8').then(cheerio.load)
@@ -35,6 +35,13 @@ const transform = co.wrap(function *(src, dest) {
   })
   yield p(mkdirp)(path.dirname(dest)).catch(printError)
   yield p(fs.writeFile)(dest, dom.html())
+})
+
+const transformJs = co.wrap(function *(src, dest) {
+  console.log(`${src} -> ${dest}`)
+  const output = yield p(babel.transformFile)(src).then(out => out.code)
+  yield p(mkdirp)(path.dirname(dest)).catch(printError)
+  yield p(fs.writeFile)(dest, output)
 })
 
 const copy = co.wrap(function *(src, dest) {
@@ -52,6 +59,7 @@ chokidar.watch('.', {cwd: o.s, persistent: o.w})
 .on('all', (ev, f) => {
   if (!['add', 'change'].includes(ev)) return
   const [src, dest] = [path.join(o.s, f), path.join(o.d, f)]
-  if (f.match(/\.html?$/)) transform(src, dest).catch(printError)
+  if (f.match(/\.html?$/)) transformHtml(src, dest).catch(printError)
+  else if (f.match(/\.jsx?$/)) transformJs(src, dest).catch(printError)
   else if (o.D) copy(src, dest).catch(printError)
 })
