@@ -1,1 +1,2 @@
-Object::f()
+import foo from 'bar'
+export default 42
