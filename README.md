@@ -17,6 +17,5 @@ This will compile all scripts embedded in all .html files in `src-dir` and save 
 
 ## TODOs
 
-- writing doesn't work at all yet
 - allow specifying config via command line
 - write tests
