@@ -7,6 +7,7 @@ const chokidar = require('chokidar')
 const cheerio = require('cheerio')
 const fs = require('fs')
 const babel = require('babel-core')
+const mkdirp = require('mkdirp')
 const o = require('yargs')
   .usage('Usage: $0 -s <src-dir> -d <dest-dir>')
   .option('s', {type: 'string', alias: 'src-dir', demand: true})
@@ -17,6 +18,8 @@ const o = require('yargs')
   .alias('h', 'help')
   .strict()
   .argv
+
+const printError = err => console.error(err.message)
 
 const transform = co.wrap(function *(src, dest) {
   console.log(`${src} -> ${dest}`)
@@ -30,15 +33,25 @@ const transform = co.wrap(function *(src, dest) {
     const output = babel.transform(input, opts).code
     dom(el).text('\n' + output.replace(/^\n/, '').replace(/^/gm, indent) + end)
   })
-  console.log(dom.html())
+  yield p(mkdirp)(path.dirname(dest)).catch(printError)
+  yield p(fs.writeFile)(dest, dom.html())
 })
 
-const copy = () => { /* TODO */ }
+const copy = co.wrap(function *(src, dest) {
+  console.log(`${src} -> ${dest}`)
+  yield p(mkdirp)(path.dirname(dest)).catch(printError)
+  yield new Promise((resolve, reject) =>
+    fs.createReadStream(src)
+    .pipe(fs.createWriteStream(dest))
+    .on('finish', resolve)
+    .on('error', reject)
+  )
+})
 
 chokidar.watch('.', {cwd: o.s, persistent: o.w})
 .on('all', (ev, f) => {
   if (!['add', 'change'].includes(ev)) return
   const [src, dest] = [path.join(o.s, f), path.join(o.d, f)]
-  if (f.match(/\.html?$/)) transform(src, dest).catch(console.error)
-  else if (o.D) copy(src, dest).catch(console.error)
+  if (f.match(/\.html?$/)) transform(src, dest).catch(printError)
+  else if (o.D) copy(src, dest).catch(printError)
 })
