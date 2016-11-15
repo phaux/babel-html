@@ -11,7 +11,7 @@ Options:
   -D, --copy-files Copy non-compilable files                           [boolean]
 ```
 
-This will compile all scripts embedded in all .html files in `src-dir` and save the results to `dest-dir`
+This will compile all scripts (embedded in html or regular js files) in `src-dir` and save the results to `dest-dir`
 
 ---
 
