@@ -2,15 +2,9 @@
   "name": "babel-html",
   "version": "0.3.0",
   "description": "Compile JS embedded in HTML with babel",
-  "main": "index.js",
-  "bin": "index.js",
-  "scripts": {
-    "test": "eslint index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/phaux/babel-html.git"
-  },
+  "author": "phaux <phaux4@gmail.com>",
+  "license": "ISC",
+  "repository": "phaux/babel-html",
   "keywords": [
     "babel",
     "html",
@@ -18,12 +12,11 @@
     "compile",
     "esnext"
   ],
-  "author": "phaux <phaux4@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/phaux/babel-html/issues"
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "eslint index.js"
   },
-  "homepage": "https://github.com/phaux/babel-html#readme",
   "devDependencies": {
     "eslint": "^3.9.1"
   },
