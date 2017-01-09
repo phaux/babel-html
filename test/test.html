@@ -1,9 +1,17 @@
 <dom-module id="my-element">
   <template>
+    <style>
+      .foo > p {
+        background-color: blue;
+      }
+    </style>
     Hello
   </template>
   <script>
-    import foo from 'bar'
-    export default 42
+    class Foo {
+      say() {
+        console.log('Hello world!')
+      }
+    }
   </script>
 </dom-module>
