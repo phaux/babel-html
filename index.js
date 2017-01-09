@@ -32,8 +32,8 @@ const transformHtml = co.wrap(function *(src, dest, {minify}) {
     const [indent] = firstLine.match(/^\s*/)
     const end = input.match(/\s*$/)[0]
     let output = babel.transform(input, {
-      filename: src, // compact: !!minify,
-      // comments: !minify, minified: !!minify,
+      filename: src, compact: !!minify,
+      comments: !minify, minified: !!minify,
     }).code
     if (minify) output = output.replace(/^\s+|\s+$/g, '')
     else output = '\n' + output.replace(/^\n/, '').replace(/^/gm, indent) + end
@@ -43,7 +43,7 @@ const transformHtml = co.wrap(function *(src, dest, {minify}) {
   let output = dom.html()
   if (minify) output = htmlMinify(output, {
     collapseInlineTagWhitespace: true, collapseWhitespace: true,
-    minifyCSS: true, minifyJS: true,
+    minifyCSS: true,
   })
   yield p(fs.writeFile)(dest, output)
 })
