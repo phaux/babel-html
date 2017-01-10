@@ -11,11 +11,26 @@ const mkdirp = require('mkdirp')
 const {minify: htmlMinify} = require('html-minifier')
 const o = require('yargs')
   .usage('Usage: $0 -s <src-dir> -d <dest-dir>')
-  .option('s', {type: 'string', alias: 'src-dir', demand: true})
-  .option('d', {type: 'string', alias: 'dest-dir', demand: true})
-  .option('D', {type: 'boolean', alias: 'copy-files'})
-  .option('w', {type: 'boolean', alias: 'watch'})
-  .option('m', {type: 'boolean', alias: 'minify'})
+  .option('s', {
+    alias: 'src-dir', type: 'string', demand: true,
+    describe: 'Source directory',
+  })
+  .option('d', {
+    alias: 'dest-dir', type: 'string', demand: true,
+    describe: 'Destination directory',
+  })
+  .option('D', {
+    alias: 'copy-files', type: 'boolean',
+    describe: 'Copy non-compilable files',
+  })
+  .option('w', {
+    alias: 'watch', type: 'boolean',
+    describe: 'Watch mode',
+  })
+  .option('m', {
+    alias: 'minify', type: 'boolean',
+    describe: 'Minify HTML, CSS nad JS',
+  })
   .help('h')
   .alias('h', 'help')
   .strict()
