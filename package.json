@@ -25,6 +25,7 @@
     "cheerio": "^0.22.0",
     "chokidar": "^1.6.1",
     "co": "^4.6.0",
+    "html-minifier": "^3.2.3",
     "mkdirp": "^0.5.1",
     "pify": "^2.3.0",
     "yargs": "^6.3.0"
