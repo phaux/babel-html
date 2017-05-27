@@ -31,6 +31,10 @@ const o = require('yargs')
     alias: 'minify', type: 'boolean',
     describe: 'Minify HTML, CSS nad JS',
   })
+  .option('q', {
+    alias: 'quiet', type: 'boolean',
+    describe: 'Disable logging',
+  })
   .help('h')
   .alias('h', 'help')
   .strict()
@@ -39,7 +43,7 @@ const o = require('yargs')
 const printError = err => console.error(err.message)
 
 const transformHtml = co.wrap(function *(src, dest, {minify}) {
-  console.log(`${src} -> ${dest}`)
+  if (!o.q) console.log(`${src} -> ${dest}`)
   const dom = yield p(fs.readFile)(src, 'utf8').then(cheerio.load)
   dom('script:not([src])').each((i, el) => {
     const input = dom(el).text()
@@ -64,7 +68,7 @@ const transformHtml = co.wrap(function *(src, dest, {minify}) {
 })
 
 const transformJs = co.wrap(function *(src, dest, {minify}) {
-  console.log(`${src} -> ${dest}`)
+  if (!o.q) console.log(`${src} -> ${dest}`)
   const output = yield p(babel.transformFile)(src, {
     compact: !!minify, comments: !minify, minified: !!minify,
   }).then(out => out.code)
@@ -73,7 +77,7 @@ const transformJs = co.wrap(function *(src, dest, {minify}) {
 })
 
 const copy = co.wrap(function *(src, dest) {
-  console.log(`${src} -> ${dest}`)
+  if (!o.q) console.log(`${src} -> ${dest}`)
   yield p(mkdirp)(path.dirname(dest)).catch(printError)
   yield new Promise((resolve, reject) =>
     fs.createReadStream(src)
