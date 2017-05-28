@@ -9,6 +9,7 @@ Options:
   -D, --copy-files  Copy non-compilable files                          [boolean]
   -w, --watch       Watch mode                                         [boolean]
   -m, --minify      Minify HTML, CSS nad JS                            [boolean]
+  -q, --quiet       Disable logging                                    [boolean]
   -h, --help        Show help                                          [boolean]
 ```
 
